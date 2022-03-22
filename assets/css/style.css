@@ -6,6 +6,16 @@
 }
 
 body {
+  font-family: 'Permanent Marker', cursive;
   color: var(--light);
   background-color: var(--dark);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
 }

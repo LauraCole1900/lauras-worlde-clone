@@ -1,4 +1,4 @@
-# lauras-worlde-clone
+# Notle
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@
 
 ## Description
 
-This application uses jQuery to build a Wordle clone.
+This application uses jQuery Mobile to build a Wordle clone.
 
 ## Links
 
@@ -45,7 +45,9 @@ npm run test
 
 ## Credits
 
-Wordle was created by Josh Wardle.
+Wordle was created by Josh Wardle
+
+normalize.css from [necolas](https://github.com/necolas/normalize.css/)
 
 ## Contributing
 
