@@ -17,10 +17,19 @@ h1 {
 
 #keyboard {
   display: flex;
-  margin: 3rem 9rem;
+  margin: 3rem 0;
   flex-wrap: wrap;
 }
 
+#row1,
+#row2,
+#row3 {
+  width: 100%;
+}
+
+#row1,
+#row2,
+#row3,
 .centered {
   display: flex;
   justify-content: center;
@@ -28,7 +37,8 @@ h1 {
 }
 
 .letterKey {
-  margin: 2px;
+  font-size: 1.5rem;
+  margin: 3px;
   border: 1px solid var(--light);
   border-radius: 4px;
   width: 3rem;
