@@ -5,6 +5,7 @@ $(function () {
   const keyboardChar = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
 
   let letterEl;
+  let guessEl;
 
   keyboardChar.map((char, i) => {
     letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char).on("click", addLetter)
@@ -15,7 +16,13 @@ $(function () {
     } else {
       $("#row3").append(letterEl);
     }
-  })
+  });
+
+  for (let i = 0; i < 5; i++) {
+    guessEl = $("<div>").addClass("letterGuess")
+    $("#firstGuess").append(guessEl)
+  }
+  
 
   function addLetter(e) {
     console.log(e.target.id);

@@ -15,6 +15,17 @@ h1 {
   font-size: 3rem;
 }
 
+#firstGuess,
+#secondGuess,
+#thirdGuess,
+#fourthGuess,
+#fifthGuess,
+#sixthGuess {
+  display: flex;
+  margin: 3px;
+  width: 100%;
+}
+
 #keyboard {
   display: flex;
   margin: 3rem 0;
@@ -36,7 +47,8 @@ h1 {
   align-items: center;
 }
 
-.letterKey {
+.letterKey,
+.letterGuess {
   font-size: 1.5rem;
   margin: 3px;
   border: 1px solid var(--light);
