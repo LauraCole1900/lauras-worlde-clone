@@ -18,11 +18,15 @@ $(function () {
     }
   });
 
-  for (let i = 0; i < 5; i++) {
-    guessEl = $("<div>").addClass("letterGuess")
-    $("#firstGuess").append(guessEl)
-  }
-  
+  const guessElArr = [$("#firstGuess"), $("#secondGuess"), $("#thirdGuess"), $("#fourthGuess"), $("#fifthGuess"), $("#sixthGuess")]
+
+  guessElArr.forEach(el => {
+    for (let i = 0; i < 5; i++) {
+      guessEl = $("<div>").addClass("letterGuess");
+      el.append(guessEl);
+    }
+  })
+
 
   function addLetter(e) {
     console.log(e.target.id);
