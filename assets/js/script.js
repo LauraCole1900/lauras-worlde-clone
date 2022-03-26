@@ -2,10 +2,16 @@ $(function () {
 
   const wordBank = ["meter", "blues", "drums", "voice", "vocal", "choir", "viola", "baton", "verdi", "haydn", "basie", "elvis", "notes", "beats", "piano", "organ", "flute", "tenor", "altos", "genre", "pedal", "motif", "motet", "conga", "dance", "cello", "music", "whole", "forte", "mezzo", "largo", "lento", "tempo", "mosso", "segno", "ossia", "tacet", "tutti", "rests", "dolce", "senza", "staff", "clefs", "canon", "sharp", "grave", "minor", "major", "modal", "rondo", "trill", "tonal", "basso", "lyric", "elegy", "etude", "fugue", "legno", "octet", "pitch", "scale", "third", "fifth", "sixth", "banjo", "bugle", "carol", "chord", "tonic", "drone", "duple", "chant", "kazoo", "march", "opera", "pluck", "strum", "pulse", "range", "brass", "reeds", "score", "sitar", "snare", "swing", "theme", "triad", "verse", "waltz", "polka", "suite", "tuner", "indie", "liszt", "ravel", "satie", "elgar", "grieg", "bizet", "davis", "louis", "sousa", "ditty", "dylan", "berry", "samba", "rumba", "slide", "gliss", "canto", "parte", "prima", "segue", "count", "audio", "forza", "stand", "intro", "molto", "recit", "quasi", "breve", "shake", "sopra", "sotto", "tasto", "corda", "break", "chops", "track", "click", "combo", "cover", "drive", "stage", "house", "front", "valve", "remix", "shred"]
 
-  const keyboardChar = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
+  const keyboardChar = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"];
 
   let letterEl;
   let guessEl;
+  let userGuess1 = [];
+  let userGuess2 = [];
+  let userGuess3 = [];
+  let userGuess4 = [];
+  let userGuess5 = [];
+  let userGuess6 = [];
 
   keyboardChar.map((char, i) => {
     letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char).on("click", addLetter)
@@ -22,14 +28,54 @@ $(function () {
 
   guessElArr.forEach((el, i) => {
     for (let j = 0; j < 5; j++) {
-      guessEl = $("<div>").addClass("letterGuess").attr("id", `el-${i}-${j}`);
+      guessEl = $("<div>").addClass("letterGuess centered").attr("id", `el-${i}-${j}`);
       el.append(guessEl);
     }
   })
 
-
   function addLetter(e) {
     console.log(e.target.id);
+    if (!["Enter", "Backspace"].includes(e.target.id)) {
+      const letter = e.target.id.toUpperCase();
+      switch (true) {
+        case userGuess1.length < 5:
+          guessIdx = userGuess1.length;
+          userGuess1.push(letter);
+          console.log({ userGuess1 });
+          $(`#el-0-${guessIdx}`).text(letter);
+          break;
+        case userGuess2.length < 5:
+          guessIdx = userGuess2.length;
+          userGuess2.push(letter);
+          $(`#el-1-${guessIdx}`).text(letter);
+          console.log({ userGuess2 });
+          break;
+        case userGuess3.length < 5:
+          guessIdx = userGuess3.length;
+          userGuess3.push(letter);
+          $(`#el-2-${guessIdx}`).text(letter);
+          console.log({ userGuess3 });
+          break;
+        case userGuess4.length < 5:
+          guessIdx = userGuess4.length;
+          userGuess4.push(letter);
+          $(`#el-3-${guessIdx}`).text(letter);
+          console.log({ userGuess4 });
+          break;
+        case userGuess5.length < 5:
+          guessIdx = userGuess5.length;
+          userGuess5.push(letter);
+          $(`#el-4-${guessIdx}`).text(letter);
+          console.log({ userGuess5 });
+          break;
+        case userGuess6.length < 5:
+          guessIdx = userGuess6.length;
+          userGuess6.push(letter);
+          $(`#el-5-${guessIdx}`).text(letter);
+          console.log({ userGuess6 });
+          break;
+      }
+    }
   }
 
 })

@@ -58,8 +58,18 @@ h1 {
   cursor: pointer;
 }
 
+.letterCorrect {
+  background-color: var(--yellow);
+  color: var(--dark);
+}
+
 .newRow {
   margin-left: 1rem;
+}
+
+.positionCorrect {
+  background-color: var(--green);
+  color: var(--dark);
 }
 
 .ui-loader-header {
