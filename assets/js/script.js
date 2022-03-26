@@ -20,9 +20,9 @@ $(function () {
 
   const guessElArr = [$("#firstGuess"), $("#secondGuess"), $("#thirdGuess"), $("#fourthGuess"), $("#fifthGuess"), $("#sixthGuess")]
 
-  guessElArr.forEach(el => {
-    for (let i = 0; i < 5; i++) {
-      guessEl = $("<div>").addClass("letterGuess");
+  guessElArr.forEach((el, i) => {
+    for (let j = 0; j < 5; j++) {
+      guessEl = $("<div>").addClass("letterGuess").attr("id", `el-${i}-${j}`);
       el.append(guessEl);
     }
   })
