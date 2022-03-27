@@ -7,30 +7,32 @@ $(function () {
   let letterEl;
   let guessEl;
   let word = "";
-  let userGuess1 = {
-    letters: [],
-    submit: false
-  };
-  let userGuess2 = {
-    letters: [],
-    submit: false
-  };
-  let userGuess3 = {
-    letters: [],
-    submit: false
-  };
-  let userGuess4 = {
-    letters: [],
-    submit: false
-  };
-  let userGuess5 = {
-    letters: [],
-    submit: false
-  };
-  let userGuess6 = {
-    letters: [],
-    submit: false
-  };
+  let userGuess = [{
+    guess1: {
+      letters: [],
+      submit: false
+    },
+    guess2: {
+      letters: [],
+      submit: false
+    },
+    guess3: {
+      letters: [],
+      submit: false
+    },
+    guess4: {
+      letters: [],
+      submit: false
+    },
+    guess5: {
+      letters: [],
+      submit: false
+    },
+    guess6: {
+      letters: [],
+      submit: false
+    }
+  }];
   const startDate = new Date("3/26/2022");
   getWord(startDate);
 
@@ -43,13 +45,24 @@ $(function () {
   }
 
   keyboardChar.map((char, i) => {
-    letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char).on("click", addLetter)
+    letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char)
     if (i < 10) {
+      letterEl.on("click", addLetter);
       $("#row1").append(letterEl);
     } else if (i >= 10 && i < 19) {
+      letterEl.on("click", addLetter)
       $("#row2").append(letterEl);
     } else {
-      $("#row3").append(letterEl);
+      if (char === "Enter") {
+        letterEl.on("click", handleSubmit);
+        $("#row3").append(letterEl);
+      } else if (char === "Backspace") {
+        letterEl.on("click", handleBackspace);
+        $("#row3").append(letterEl);
+      } else {
+        letterEl.on("click", addLetter);
+        $("#row3").append(letterEl);
+      }
     }
   });
 
@@ -66,45 +79,78 @@ $(function () {
     console.log(e.target.id);
     if (!["Enter", "Backspace"].includes(e.target.id)) {
       const letter = e.target.id.toUpperCase();
+      console.log({ userGuess });
       switch (true) {
-        case userGuess1.length < 5:
-          guessIdx = userGuess1.length;
-          userGuess1.push(letter);
-          console.log({ userGuess1 });
+        case userGuess[0].guess1.letters.length < 5:
+          guessIdx = userGuess[0].guess1.letters.length;
+          userGuess[0].guess1.letters.push(letter);
+          console.log("guess1", userGuess[0].guess1.letters);
           $(`#el-0-${guessIdx}`).text(letter);
           break;
-        case userGuess2.length < 5:
-          guessIdx = userGuess2.length;
-          userGuess2.push(letter);
-          $(`#el-1-${guessIdx}`).text(letter);
-          console.log({ userGuess2 });
+        case userGuess[0].guess2.letters.length < 5 && userGuess[0].guess1.submit:
+          guessIdx = userGuess[0].guess2.letters.length;
+          userGuess[0].guess2.letters.push(letter);
+          console.log("guess2", userGuess[0].guess2.letters);
+          $(`#el-0-${guessIdx}`).text(letter);
           break;
-        case userGuess3.length < 5:
-          guessIdx = userGuess3.length;
-          userGuess3.push(letter);
-          $(`#el-2-${guessIdx}`).text(letter);
-          console.log({ userGuess3 });
+        case userGuess[0].guess3.letters.length < 5 && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
+          guessIdx = userGuess[0].guess3.letters.length;
+          userGuess[0].guess3.letters.push(letter);
+          console.log("guess3", userGuess[0].guess3.letters);
+          $(`#el-0-${guessIdx}`).text(letter);
           break;
-        case userGuess4.length < 5:
-          guessIdx = userGuess4.length;
-          userGuess4.push(letter);
-          $(`#el-3-${guessIdx}`).text(letter);
-          console.log({ userGuess4 });
+        case userGuess[0].guess4.letters.length < 5 && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
+          guessIdx = userGuess[0].guess4.letters.length;
+          userGuess[0].guess4.letters.push(letter);
+          console.log("guess4", userGuess[0].guess4.letters);
+          $(`#el-0-${guessIdx}`).text(letter);
           break;
-        case userGuess5.length < 5:
-          guessIdx = userGuess5.length;
-          userGuess5.push(letter);
-          $(`#el-4-${guessIdx}`).text(letter);
-          console.log({ userGuess5 });
+        case userGuess[0].guess5.letters.length < 5 && userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
+          guessIdx = userGuess[0].guess5.letters.length;
+          userGuess[0].guess5.letters.push(letter);
+          console.log("guess5", userGuess[0].guess5.letters);
+          $(`#el-0-${guessIdx}`).text(letter);
           break;
-        case userGuess6.length < 5:
-          guessIdx = userGuess6.length;
-          userGuess6.push(letter);
-          $(`#el-5-${guessIdx}`).text(letter);
-          console.log({ userGuess6 });
+        case userGuess[0].guess6.letters.length < 5 && userGuess[0].guess5.submit && userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
+          guessIdx = userGuess[0].guess6.letters.length;
+          userGuess[0].guess6.letters.push(letter);
+          console.log("guess6", userGuess[0].guess6.letters);
+          $(`#el-0-${guessIdx}`).text(letter);
           break;
+        default:
+          return false;
       }
     }
+  }
+
+  function handleBackspace() {
+    switch (true) {
+      case userGuess[0].guess1.letters.length > 0:
+        userGuess[0].guess1.letters.pop();
+        console.log(userGuess[0].guess1.letters);
+        break;
+      case userGuess[0].guess1.submit && userGuess[0].guess2.letters.length > 0:
+        userGuess[0].guess2.letters.pop();
+        break;
+      case userGuess[0].guess2.submit && userGuess[0].guess3.letters.length > 0:
+        userGuess[0].guess3.letters.pop();
+        break;
+      case userGuess[0].guess3.submit && userGuess[0].guess4.letters.length > 0:
+        userGuess[0].guess4.letters.pop();
+        break;
+      case userGuess[0].guess4.submit && userGuess[0].guess5.letters.length > 0:
+        userGuess[0].guess5.letters.pop();
+        break;
+      case userGuess[0].guess5.submit && userGuess[0].guess6.letters.length > 0:
+        userGuess[0].guess6.letters.pop();
+        break;
+      default:
+        return false;
+    }
+  }
+
+  function handleSubmit() {
+
   }
 
 })
