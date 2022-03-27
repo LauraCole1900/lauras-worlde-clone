@@ -15,6 +15,11 @@ h1 {
   font-size: 3rem;
 }
 
+#Backspace,
+#Enter {
+  width: 6rem;
+}
+
 #firstGuess,
 #secondGuess,
 #thirdGuess,
