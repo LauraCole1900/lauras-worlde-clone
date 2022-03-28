@@ -1,6 +1,6 @@
 :root {
   --yellow: #f3f46e;
-  --green: #008d00;
+  --green: #01862d;
   --dark: #2c2c2c;
   --light: #e2e2e2;
 }
@@ -74,7 +74,6 @@ h1 {
 
 .positionCorrect {
   background-color: var(--green);
-  color: var(--dark);
 }
 
 .ui-loader-header {
