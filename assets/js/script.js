@@ -126,22 +126,28 @@ $(function () {
   function handleBackspace() {
     switch (true) {
       case userGuess[0].guess1.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess1.letters.length - 1}`).text("");
         userGuess[0].guess1.letters.pop();
         console.log(userGuess[0].guess1.letters);
         break;
       case userGuess[0].guess1.submit && userGuess[0].guess2.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess2.letters.length - 1}`).text("");
         userGuess[0].guess2.letters.pop();
         break;
       case userGuess[0].guess2.submit && userGuess[0].guess3.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess3.letters.length - 1}`).text("");
         userGuess[0].guess3.letters.pop();
         break;
       case userGuess[0].guess3.submit && userGuess[0].guess4.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess4.letters.length - 1}`).text("");
         userGuess[0].guess4.letters.pop();
         break;
       case userGuess[0].guess4.submit && userGuess[0].guess5.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess5.letters.length - 1}`).text("");
         userGuess[0].guess5.letters.pop();
         break;
       case userGuess[0].guess5.submit && userGuess[0].guess6.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess6.letters.length - 1}`).text("");
         userGuess[0].guess6.letters.pop();
         break;
       default:
