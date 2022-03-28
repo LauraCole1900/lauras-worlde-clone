@@ -169,17 +169,26 @@ $(function () {
           wordGuessed = wordGuessed.concat(firstGuess.letters[i]);
         }
         firstGuess.submit = true;
+        // check if it's a known word
         if (wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-0-${i}`).addClass("positionCorrect");
             winGame();
           }
+        } else {
+          // iterate over guess
+          // check if word includes letter
+          // if word includes letter, check index
+          // if index is same, set class positionCorrect
+          // if index is different but not -1, set class letterCorrect
         }
+        break;
+
     }
   }
 
   function winGame() {
-    
+
   }
 
 })
