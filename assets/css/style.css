@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Caveat', cursive;
   color: var(--light);
   background-color: var(--dark);
 }
@@ -17,7 +17,7 @@ h1 {
 
 #Backspace,
 #Enter {
-  width: 6rem;
+  width: 7rem;
 }
 
 #firstGuess,

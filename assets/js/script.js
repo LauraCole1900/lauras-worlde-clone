@@ -33,7 +33,7 @@ $(function () {
       submit: false
     }
   }];
-  const startDate = new Date("3/26/2022");
+  const startDate = new Date("3/29/2022");
   getWord(startDate);
 
   function getWord(date) {
@@ -91,31 +91,31 @@ $(function () {
           guessIdx = userGuess[0].guess2.letters.length;
           userGuess[0].guess2.letters.push(letter);
           console.log("guess2", userGuess[0].guess2.letters);
-          $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
+          $(`#el-1-${guessIdx}`).text(letter.toUpperCase());
           break;
         case userGuess[0].guess3.letters.length < 5 && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
           guessIdx = userGuess[0].guess3.letters.length;
           userGuess[0].guess3.letters.push(letter);
           console.log("guess3", userGuess[0].guess3.letters);
-          $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
+          $(`#el-2-${guessIdx}`).text(letter.toUpperCase());
           break;
         case userGuess[0].guess4.letters.length < 5 && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
           guessIdx = userGuess[0].guess4.letters.length;
           userGuess[0].guess4.letters.push(letter);
           console.log("guess4", userGuess[0].guess4.letters);
-          $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
+          $(`#el-3-${guessIdx}`).text(letter.toUpperCase());
           break;
         case userGuess[0].guess5.letters.length < 5 && userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
           guessIdx = userGuess[0].guess5.letters.length;
           userGuess[0].guess5.letters.push(letter);
           console.log("guess5", userGuess[0].guess5.letters);
-          $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
+          $(`#el-4-${guessIdx}`).text(letter.toUpperCase());
           break;
         case userGuess[0].guess6.letters.length < 5 && userGuess[0].guess5.submit && userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit:
           guessIdx = userGuess[0].guess6.letters.length;
           userGuess[0].guess6.letters.push(letter);
           console.log("guess6", userGuess[0].guess6.letters);
-          $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
+          $(`#el-5-${guessIdx}`).text(letter.toUpperCase());
           break;
         default:
           return false;
@@ -176,11 +176,19 @@ $(function () {
             winGame();
           }
         } else {
-          // iterate over guess
-          // check if word includes letter
-          // if word includes letter, check index
-          // if index is same, set class positionCorrect
-          // if index is different but not -1, set class letterCorrect
+          for (let i = 0; i < wordGuessed.length; i++) {
+            for (let j = 0; j < word.length; j++) {
+              if (wordGuessed[i] === word[i]) {
+                $(`#el-0-${i}`).addClass("positionCorrect");
+                continue;
+              } else if (word.includes(wordGuessed[i])) {
+                $(`#el-0-${i}`).addClass("letterCorrect");
+                continue;
+              } else {
+                continue;
+              }
+            }
+          }
         }
         break;
 
