@@ -76,10 +76,8 @@ $(function () {
   })
 
   function addLetter(e) {
-    console.log(e.target.id);
     if (!["Enter", "Backspace"].includes(e.target.id)) {
       const letter = e.target.id;
-      console.log({ userGuess });
       switch (true) {
         case userGuess[0].guess1.letters.length < 5:
           guessIdx = userGuess[0].guess1.letters.length;
@@ -124,23 +122,23 @@ $(function () {
         userGuess[0].guess1.letters.pop();
         break;
       case userGuess[0].guess1.submit && userGuess[0].guess2.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess2.letters.length - 1}`).text("");
+        $(`#el-1-${userGuess[0].guess2.letters.length - 1}`).text("");
         userGuess[0].guess2.letters.pop();
         break;
       case userGuess[0].guess2.submit && userGuess[0].guess3.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess3.letters.length - 1}`).text("");
+        $(`#el-2-${userGuess[0].guess3.letters.length - 1}`).text("");
         userGuess[0].guess3.letters.pop();
         break;
       case userGuess[0].guess3.submit && userGuess[0].guess4.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess4.letters.length - 1}`).text("");
+        $(`#el-3-${userGuess[0].guess4.letters.length - 1}`).text("");
         userGuess[0].guess4.letters.pop();
         break;
       case userGuess[0].guess4.submit && userGuess[0].guess5.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess5.letters.length - 1}`).text("");
+        $(`#el-4-${userGuess[0].guess5.letters.length - 1}`).text("");
         userGuess[0].guess5.letters.pop();
         break;
       case userGuess[0].guess5.submit && userGuess[0].guess6.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess6.letters.length - 1}`).text("");
+        $(`#el-5-${userGuess[0].guess6.letters.length - 1}`).text("");
         userGuess[0].guess6.letters.pop();
         break;
       default:
@@ -148,7 +146,7 @@ $(function () {
     }
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const firstGuess = userGuess[0].guess1;
     const secondGuess = userGuess[0].guess2;
     const thirdGuess = userGuess[0].guess3;
@@ -162,20 +160,21 @@ $(function () {
         for (let i = 0; i < firstGuess.letters.length; i++) {
           wordGuessed = wordGuessed.concat(firstGuess.letters[i]);
         }
-        firstGuess.submit = true;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
+        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
           .then(function (response) {
+            console.log({ response });
             if (response.ok) {
               validate = true;
+              firstGuess.submit = true;
             } else {
               validate = false;
             }
           });
         if (wordBank.includes(wordGuessed)) {
           validate = true;
+          firstGuess.submit = true;
         }
         if (validate === false) {
-          firstGuess.submit = false;
           firstGuess.letters = [];
           for (let i = 0; i < 5; i++) {
             $(`#el-0-${i}`).text("");
@@ -207,20 +206,20 @@ $(function () {
         for (let i = 0; i < secondGuess.letters.length; i++) {
           wordGuessed = wordGuessed.concat(secondGuess.letters[i]);
         }
-        secondGuess.submit = true;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
+        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
           .then(function (response) {
             if (response.ok) {
               validate = true;
+              secondGuess.submit = true;
             } else {
               validate = false;
             }
           });
         if (wordBank.includes(wordGuessed)) {
           validate = true;
+          secondGuess.submit = true;
         }
         if (validate === false) {
-          secondGuess.submit = false;
           secondGuess.letters = [];
           for (let i = 0; i < 5; i++) {
             $(`#el-1-${i}`).text("");
@@ -252,20 +251,20 @@ $(function () {
         for (let i = 0; i < thirdGuess.letters.length; i++) {
           wordGuessed = wordGuessed.concat(thirdGuess.letters[i]);
         }
-        thirdGuess.submit = true;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
+        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
           .then(function (response) {
             if (response.ok) {
               validate = true;
+              thirdGuess.submit = true;
             } else {
               validate = false;
             }
           });
         if (wordBank.includes(wordGuessed)) {
           validate = true;
+          thirdGuess.submit = true;
         }
         if (validate === false) {
-          thirdGuess.submit = false;
           thirdGuess.letters = [];
           for (let i = 0; i < 5; i++) {
             $(`#el-2-${i}`).text("");
@@ -297,20 +296,20 @@ $(function () {
         for (let i = 0; i < fourthGuess.letters.length; i++) {
           wordGuessed = wordGuessed.concat(fourthGuess.letters[i]);
         }
-        fourthGuess.submit = true;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
+        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
           .then(function (response) {
             if (response.ok) {
               validate = true;
+              fourthGuess.submit = true;
             } else {
               validate = false;
             }
           });
         if (wordBank.includes(wordGuessed)) {
           validate = true;
+          fourthGuess.submit = true;
         }
         if (validate === false) {
-          fourthGuess.submit = false;
           fourthGuess.letters = [];
           for (let i = 0; i < 5; i++) {
             $(`#el-3-${i}`).text("");
@@ -342,20 +341,20 @@ $(function () {
         for (let i = 0; i < fifthGuess.letters.length; i++) {
           wordGuessed = wordGuessed.concat(fifthGuess.letters[i]);
         }
-        fifthGuess.submit = true;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
+        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
           .then(function (response) {
             if (response.ok) {
               validate = true;
+              fifthGuess.submit = true;
             } else {
               validate = false;
             }
           });
         if (wordBank.includes(wordGuessed)) {
           validate = true;
+          fifthGuess.submit = true;
         }
         if (validate === false) {
-          fifthGuess.submit = false;
           fifthGuess.letters = [];
           for (let i = 0; i < 5; i++) {
             $(`#el-4-${i}`).text("");
@@ -387,20 +386,20 @@ $(function () {
         for (let i = 0; i < sixthGuess.letters.length; i++) {
           wordGuessed = wordGuessed.concat(sixthGuess.letters[i]);
         }
-        sixthGuess.submit = true;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
+        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
           .then(function (response) {
             if (response.ok) {
               validate = true;
+              sixthGuess.submit = true;
             } else {
               validate = false;
             }
           });
         if (wordBank.includes(wordGuessed)) {
           validate = true;
+          sixthGuess.submit = true;
         }
         if (validate === false) {
-          sixthGuess.submit = false;
           sixthGuess.letters = [];
           for (let i = 0; i < 5; i++) {
             $(`#el-5-${i}`).text("");
