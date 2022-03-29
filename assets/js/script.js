@@ -420,9 +420,9 @@ $(function () {
                 continue;
               } else if (word.includes(wordGuessed[i])) {
                 $(`#el-5-${i}`).addClass("letterCorrect");
-                continue;
+                loseGame();
               } else {
-                continue;
+                loseGame();
               }
             }
           }
