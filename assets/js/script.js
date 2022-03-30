@@ -7,6 +7,7 @@ $(function () {
   let letterEl;
   let guessEl;
   let word = "";
+  const modal = $("#myModal");
   let userGuess = [{
     guess1: {
       letters: [],
@@ -117,29 +118,29 @@ $(function () {
 
   function handleBackspace() {
     switch (true) {
-      case userGuess[0].guess1.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess1.letters.length - 1}`).text("");
-        userGuess[0].guess1.letters.pop();
+      case !userGuess[0].guess6.submit && userGuess[0].guess5.submit && userGuess[0].guess6.letters.length > 0:
+        $(`#el-5-${userGuess[0].guess6.letters.length - 1}`).text("");
+        userGuess[0].guess6.letters.pop();
         break;
-      case userGuess[0].guess1.submit && userGuess[0].guess2.letters.length > 0:
-        $(`#el-1-${userGuess[0].guess2.letters.length - 1}`).text("");
-        userGuess[0].guess2.letters.pop();
-        break;
-      case userGuess[0].guess2.submit && userGuess[0].guess3.letters.length > 0:
-        $(`#el-2-${userGuess[0].guess3.letters.length - 1}`).text("");
-        userGuess[0].guess3.letters.pop();
-        break;
-      case userGuess[0].guess3.submit && userGuess[0].guess4.letters.length > 0:
-        $(`#el-3-${userGuess[0].guess4.letters.length - 1}`).text("");
-        userGuess[0].guess4.letters.pop();
-        break;
-      case userGuess[0].guess4.submit && userGuess[0].guess5.letters.length > 0:
+      case !userGuess[0].guess5.submit && userGuess[0].guess4.submit && userGuess[0].guess5.letters.length > 0:
         $(`#el-4-${userGuess[0].guess5.letters.length - 1}`).text("");
         userGuess[0].guess5.letters.pop();
         break;
-      case userGuess[0].guess5.submit && userGuess[0].guess6.letters.length > 0:
-        $(`#el-5-${userGuess[0].guess6.letters.length - 1}`).text("");
-        userGuess[0].guess6.letters.pop();
+      case !userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess4.letters.length > 0:
+        $(`#el-3-${userGuess[0].guess4.letters.length - 1}`).text("");
+        userGuess[0].guess4.letters.pop();
+        break;
+      case !userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess3.letters.length > 0:
+        $(`#el-2-${userGuess[0].guess3.letters.length - 1}`).text("");
+        userGuess[0].guess3.letters.pop();
+        break;
+      case !userGuess[0].guess2.submit && userGuess[0].guess1.submit && userGuess[0].guess2.letters.length > 0:
+        $(`#el-1-${userGuess[0].guess2.letters.length - 1}`).text("");
+        userGuess[0].guess2.letters.pop();
+        break;
+      case !userGuess[0].guess1.submit && userGuess[0].guess1.letters.length > 0:
+        $(`#el-0-${userGuess[0].guess1.letters.length - 1}`).text("");
+        userGuess[0].guess1.letters.pop();
         break;
       default:
         return false;
@@ -183,8 +184,8 @@ $(function () {
         if (validate && wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-0-${i}`).addClass("positionCorrect");
-            winGame();
           }
+          winGame();
         } else if (validate && wordGuessed !== word) {
           for (let i = 0; i < wordGuessed.length; i++) {
             for (let j = 0; j < word.length; j++) {
@@ -226,8 +227,8 @@ $(function () {
         if (validate && wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-1-${i}`).addClass("positionCorrect");
-            winGame();
           }
+          winGame();
         } else if (validate && wordGuessed !== word) {
           for (let i = 0; i < wordGuessed.length; i++) {
             for (let j = 0; j < word.length; j++) {
@@ -271,8 +272,8 @@ $(function () {
         if (validate && wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-2-${i}`).addClass("positionCorrect");
-            winGame();
           }
+          winGame();
         } else if (validate && wordGuessed !== word) {
           for (let i = 0; i < wordGuessed.length; i++) {
             for (let j = 0; j < word.length; j++) {
@@ -316,8 +317,8 @@ $(function () {
         if (validate && wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-3-${i}`).addClass("positionCorrect");
-            winGame();
           }
+          winGame();
         } else if (validate && wordGuessed !== word) {
           for (let i = 0; i < wordGuessed.length; i++) {
             for (let j = 0; j < word.length; j++) {
@@ -361,8 +362,8 @@ $(function () {
         if (validate && wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-4-${i}`).addClass("positionCorrect");
-            winGame();
           }
+          winGame();
         } else if (validate && wordGuessed !== word) {
           for (let i = 0; i < wordGuessed.length; i++) {
             for (let j = 0; j < word.length; j++) {
@@ -406,42 +407,83 @@ $(function () {
         if (validate && wordGuessed === word) {
           for (let i = 0; i < 5; i++) {
             $(`#el-5-${i}`).addClass("positionCorrect");
-            winGame();
           }
+          winGame();
         } else if (validate && wordGuessed !== word) {
           for (let i = 0; i < wordGuessed.length; i++) {
             for (let j = 0; j < word.length; j++) {
               if (wordGuessed[i] === word[i]) {
                 $(`#el-5-${i}`).addClass("positionCorrect");
-                continue;
               } else if (word.includes(wordGuessed[i])) {
                 $(`#el-5-${i}`).addClass("letterCorrect");
-                loseGame();
-              } else {
-                loseGame();
               }
             }
           }
+          loseGame();
         }
         break;
     }
   }
 
-  function notWord() {
+  function closeModal() {
+    $("#modalContent").empty();
+    modal.css("display", "none");
+  }
 
+  function notWord() {
+    const notWordMsg = $("<h2>Word not found. Try again</h2>");
+    const okBtn = $("<button type='button' class='btn'>OK</button>")
+    okBtn.on("click", closeModal);
+    $("#modalContent").append(notWordMsg).append(okBtn);
+    modal.css("display", "block");
   }
 
   function winGame() {
+    let winMsg = "";
+    let count = 0;
     userGuess[0].guess1.submit = true;
     userGuess[0].guess2.submit = true;
     userGuess[0].guess3.submit = true;
     userGuess[0].guess4.submit = true;
     userGuess[0].guess5.submit = true;
     userGuess[0].guess6.submit = true;
+    switch (true) {
+      case userGuess[0].guess2.letters.length === 0:
+        count = 1;
+        winMsg = $(`<h2>Sublime</h2><p>You won in ${count}</p>`);
+        break;
+      case userGuess[0].guess3.letters.length === 0:
+        count = 2;
+        winMsg = $(`<h2>You are one cool cat, Jack</h2><p>You won in ${count}</p>`);
+        break;
+      case userGuess[0].guess4.letters.length === 0:
+        count = 3;
+        winMsg = $(`<h2>Not bad, not bad ... room for improvement</h2><p>You won in ${count}</p>`);
+        break;
+      case userGuess[0].guess5.letters.length === 0:
+        count = 4;
+        winMsg = $(`<h2>Don't be timid on your entrances!</h2><p>You won in ${count}</p>`);
+        break;
+      case userGuess[0].guess6.letters.length === 0:
+        count = 5;
+        winMsg = $(`<h2>Your releases are spongey!</h2><p>You won in ${count}</p>`);
+        break;
+      default:
+        count = 6;
+        winMsg = $(`<h2>That was either the most divine pianissimo I've ever heard or you forgot to come in</h2><p>You won in ${count}</p>`)
+    }
+    const okBtn = $("<button type='button' class='btn'>OK</button>")
+    okBtn.on("click", closeModal);
+    $("#modalContent").append(winMsg).append(okBtn);
+    modal.css("display", "block");
   }
 
   function loseGame() {
-
+    const loseMsg = $(`<h2>Looks like we need to take it to the woodshed. The word is '${word.toUpperCase()}'</h2>`);
+    const okBtn = $("<button type='button' class='btn'>OK</button>")
+    okBtn.on("click", closeModal);
+    $("#modalContent").append(loseMsg).append(okBtn);
+    modal.css("display", "block");
   }
 
 })
