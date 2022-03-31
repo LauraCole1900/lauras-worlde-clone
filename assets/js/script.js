@@ -441,35 +441,33 @@ $(function () {
   function winGame() {
     let winMsg = "";
     let count = 0;
-    userGuess.guess1.submit = true;
-    userGuess.guess2.submit = true;
-    userGuess.guess3.submit = true;
-    userGuess.guess4.submit = true;
-    userGuess.guess5.submit = true;
-    userGuess.guess6.submit = true;
-    switch (true) {
-      case userGuess.guess2.letters.length === 0:
-        count = 1;
+    for (const key in userGuess) {
+      console.log({ key });
+      if (userGuess[key].submit) {
+        ++count;
+        console.log(userGuess[key].submit);
+        console.log({ count });
+      } else {
+        userGuess[key].submit = true;
+      }
+    }
+    switch (count) {
+      case 1:
         winMsg = $(`<h2>Sublime</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess.guess3.letters.length === 0:
-        count = 2;
+      case 2:
         winMsg = $(`<h2>You are one cool cat, Jack</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess.guess4.letters.length === 0:
-        count = 3;
+      case 3:
         winMsg = $(`<h2>Not bad, not bad ... room for improvement</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess.guess5.letters.length === 0:
-        count = 4;
+      case 4:
         winMsg = $(`<h2>Don't be timid on your entrances!</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess.guess6.letters.length === 0:
-        count = 5;
+      case 5:
         winMsg = $(`<h2>Your releases are spongey!</h2><p>You won in ${count}</p>`);
         break;
       default:
-        count = 6;
         winMsg = $(`<h2>That was either the most divine pianissimo I've ever heard or you forgot to come in</h2><p>You won in ${count}</p>`)
     }
     const okBtn = $("<button type='button' class='btn'>OK</button>")
