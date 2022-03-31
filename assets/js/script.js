@@ -442,11 +442,8 @@ $(function () {
     let winMsg = "";
     let count = 0;
     for (const key in userGuess) {
-      console.log({ key });
       if (userGuess[key].submit) {
         ++count;
-        console.log(userGuess[key].submit);
-        console.log({ count });
       } else {
         userGuess[key].submit = true;
       }
