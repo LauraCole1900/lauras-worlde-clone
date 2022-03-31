@@ -8,7 +8,7 @@ $(function () {
   let guessEl;
   let word = "";
   const modal = $("#myModal");
-  let userGuess = [{
+  let userGuess = {
     guess1: {
       letters: [],
       submit: false
@@ -33,7 +33,7 @@ $(function () {
       letters: [],
       submit: false
     }
-  }];
+  };
   const startDate = new Date("3/29/2022");
   getWord(startDate);
 
@@ -80,34 +80,34 @@ $(function () {
     if (!["Enter", "Backspace"].includes(e.target.id)) {
       const letter = e.target.id;
       switch (true) {
-        case userGuess[0].guess1.letters.length < 5 && !userGuess[0].guess1.submit:
-          guessIdx = userGuess[0].guess1.letters.length;
-          userGuess[0].guess1.letters.push(letter);
+        case userGuess.guess1.letters.length < 5 && !userGuess.guess1.submit:
+          guessIdx = userGuess.guess1.letters.length;
+          userGuess.guess1.letters.push(letter);
           $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess[0].guess2.letters.length < 5 && userGuess[0].guess1.submit && !userGuess[0].guess2.submit:
-          guessIdx = userGuess[0].guess2.letters.length;
-          userGuess[0].guess2.letters.push(letter);
+        case userGuess.guess2.letters.length < 5 && userGuess.guess1.submit && !userGuess.guess2.submit:
+          guessIdx = userGuess.guess2.letters.length;
+          userGuess.guess2.letters.push(letter);
           $(`#el-1-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess[0].guess3.letters.length < 5 && userGuess[0].guess2.submit && userGuess[0].guess1.submit && !userGuess[0].guess3.submit:
-          guessIdx = userGuess[0].guess3.letters.length;
-          userGuess[0].guess3.letters.push(letter);
+        case userGuess.guess3.letters.length < 5 && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess3.submit:
+          guessIdx = userGuess.guess3.letters.length;
+          userGuess.guess3.letters.push(letter);
           $(`#el-2-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess[0].guess4.letters.length < 5 && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit && !userGuess[0].guess4.submit:
-          guessIdx = userGuess[0].guess4.letters.length;
-          userGuess[0].guess4.letters.push(letter);
+        case userGuess.guess4.letters.length < 5 && userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess4.submit:
+          guessIdx = userGuess.guess4.letters.length;
+          userGuess.guess4.letters.push(letter);
           $(`#el-3-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess[0].guess5.letters.length < 5 && userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit && !userGuess[0].guess5.submit:
-          guessIdx = userGuess[0].guess5.letters.length;
-          userGuess[0].guess5.letters.push(letter);
+        case userGuess.guess5.letters.length < 5 && userGuess.guess4.submit && userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess5.submit:
+          guessIdx = userGuess.guess5.letters.length;
+          userGuess.guess5.letters.push(letter);
           $(`#el-4-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess[0].guess6.letters.length < 5 && userGuess[0].guess5.submit && userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess1.submit && !userGuess[0].guess6.submit:
-          guessIdx = userGuess[0].guess6.letters.length;
-          userGuess[0].guess6.letters.push(letter);
+        case userGuess.guess6.letters.length < 5 && userGuess.guess5.submit && userGuess.guess4.submit && userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess6.submit:
+          guessIdx = userGuess.guess6.letters.length;
+          userGuess.guess6.letters.push(letter);
           $(`#el-5-${guessIdx}`).text(letter.toUpperCase());
           break;
         default:
@@ -118,29 +118,29 @@ $(function () {
 
   function handleBackspace() {
     switch (true) {
-      case !userGuess[0].guess6.submit && userGuess[0].guess5.submit && userGuess[0].guess6.letters.length > 0:
-        $(`#el-5-${userGuess[0].guess6.letters.length - 1}`).text("");
-        userGuess[0].guess6.letters.pop();
+      case !userGuess.guess6.submit && userGuess.guess5.submit && userGuess.guess6.letters.length > 0:
+        $(`#el-5-${userGuess.guess6.letters.length - 1}`).text("");
+        userGuess.guess6.letters.pop();
         break;
-      case !userGuess[0].guess5.submit && userGuess[0].guess4.submit && userGuess[0].guess5.letters.length > 0:
-        $(`#el-4-${userGuess[0].guess5.letters.length - 1}`).text("");
-        userGuess[0].guess5.letters.pop();
+      case !userGuess.guess5.submit && userGuess.guess4.submit && userGuess.guess5.letters.length > 0:
+        $(`#el-4-${userGuess.guess5.letters.length - 1}`).text("");
+        userGuess.guess5.letters.pop();
         break;
-      case !userGuess[0].guess4.submit && userGuess[0].guess3.submit && userGuess[0].guess4.letters.length > 0:
-        $(`#el-3-${userGuess[0].guess4.letters.length - 1}`).text("");
-        userGuess[0].guess4.letters.pop();
+      case !userGuess.guess4.submit && userGuess.guess3.submit && userGuess.guess4.letters.length > 0:
+        $(`#el-3-${userGuess.guess4.letters.length - 1}`).text("");
+        userGuess.guess4.letters.pop();
         break;
-      case !userGuess[0].guess3.submit && userGuess[0].guess2.submit && userGuess[0].guess3.letters.length > 0:
-        $(`#el-2-${userGuess[0].guess3.letters.length - 1}`).text("");
-        userGuess[0].guess3.letters.pop();
+      case !userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess3.letters.length > 0:
+        $(`#el-2-${userGuess.guess3.letters.length - 1}`).text("");
+        userGuess.guess3.letters.pop();
         break;
-      case !userGuess[0].guess2.submit && userGuess[0].guess1.submit && userGuess[0].guess2.letters.length > 0:
-        $(`#el-1-${userGuess[0].guess2.letters.length - 1}`).text("");
-        userGuess[0].guess2.letters.pop();
+      case !userGuess.guess2.submit && userGuess.guess1.submit && userGuess.guess2.letters.length > 0:
+        $(`#el-1-${userGuess.guess2.letters.length - 1}`).text("");
+        userGuess.guess2.letters.pop();
         break;
-      case !userGuess[0].guess1.submit && userGuess[0].guess1.letters.length > 0:
-        $(`#el-0-${userGuess[0].guess1.letters.length - 1}`).text("");
-        userGuess[0].guess1.letters.pop();
+      case !userGuess.guess1.submit && userGuess.guess1.letters.length > 0:
+        $(`#el-0-${userGuess.guess1.letters.length - 1}`).text("");
+        userGuess.guess1.letters.pop();
         break;
       default:
         return false;
@@ -148,12 +148,12 @@ $(function () {
   }
 
   async function handleSubmit() {
-    const firstGuess = userGuess[0].guess1;
-    const secondGuess = userGuess[0].guess2;
-    const thirdGuess = userGuess[0].guess3;
-    const fourthGuess = userGuess[0].guess4;
-    const fifthGuess = userGuess[0].guess5;
-    const sixthGuess = userGuess[0].guess6;
+    const firstGuess = userGuess.guess1;
+    const secondGuess = userGuess.guess2;
+    const thirdGuess = userGuess.guess3;
+    const fourthGuess = userGuess.guess4;
+    const fifthGuess = userGuess.guess5;
+    const sixthGuess = userGuess.guess6;
     let wordGuessed = "";
     let validate = false;
     switch (true) {
@@ -441,30 +441,30 @@ $(function () {
   function winGame() {
     let winMsg = "";
     let count = 0;
-    userGuess[0].guess1.submit = true;
-    userGuess[0].guess2.submit = true;
-    userGuess[0].guess3.submit = true;
-    userGuess[0].guess4.submit = true;
-    userGuess[0].guess5.submit = true;
-    userGuess[0].guess6.submit = true;
+    userGuess.guess1.submit = true;
+    userGuess.guess2.submit = true;
+    userGuess.guess3.submit = true;
+    userGuess.guess4.submit = true;
+    userGuess.guess5.submit = true;
+    userGuess.guess6.submit = true;
     switch (true) {
-      case userGuess[0].guess2.letters.length === 0:
+      case userGuess.guess2.letters.length === 0:
         count = 1;
         winMsg = $(`<h2>Sublime</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess[0].guess3.letters.length === 0:
+      case userGuess.guess3.letters.length === 0:
         count = 2;
         winMsg = $(`<h2>You are one cool cat, Jack</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess[0].guess4.letters.length === 0:
+      case userGuess.guess4.letters.length === 0:
         count = 3;
         winMsg = $(`<h2>Not bad, not bad ... room for improvement</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess[0].guess5.letters.length === 0:
+      case userGuess.guess5.letters.length === 0:
         count = 4;
         winMsg = $(`<h2>Don't be timid on your entrances!</h2><p>You won in ${count}</p>`);
         break;
-      case userGuess[0].guess6.letters.length === 0:
+      case userGuess.guess6.letters.length === 0:
         count = 5;
         winMsg = $(`<h2>Your releases are spongey!</h2><p>You won in ${count}</p>`);
         break;
