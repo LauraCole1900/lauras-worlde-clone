@@ -188,11 +188,10 @@ $(function () {
     let winMsg = "";
     let count = 0;
     for (const key in userGuess) {
-      console.log({ count });
-      if (guess.submit) {
+      if (userGuess[key].submit) {
         ++count;
       } else {
-        guess.submit = true;
+        userGuess[key].submit = true;
       }
     }
     switch (count) {
