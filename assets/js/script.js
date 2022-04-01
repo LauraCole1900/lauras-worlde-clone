@@ -47,7 +47,7 @@ $(function () {
   const fourthGuess = userGuess.guess4;
   const fifthGuess = userGuess.guess5;
   const sixthGuess = userGuess.guess6;
-  const startDate = new Date("3/29/2022");
+  const startDate = new Date("4/1/2022");
 
   keyboardChar.map((char, i) => {
     letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char)
@@ -85,7 +85,6 @@ $(function () {
     const timeDiff = todayDate - date.getTime();
     const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
     word = wordBank.at(dayDiff);
-    console.log({ word });
   };
 
   function addLetter(ltr, guess) {
