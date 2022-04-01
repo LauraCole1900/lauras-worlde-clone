@@ -52,10 +52,10 @@ $(function () {
   keyboardChar.map((char, i) => {
     letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char)
     if (i < 10) {
-      letterEl.on("click", addLetter);
+      letterEl.on("click", addLetterCase);
       $("#row1").append(letterEl);
     } else if (i >= 10 && i < 19) {
-      letterEl.on("click", addLetter)
+      letterEl.on("click", addLetterCase)
       $("#row2").append(letterEl);
     } else {
       if (char === "Enter") {
@@ -65,7 +65,7 @@ $(function () {
         letterEl.on("click", handleBackspaceCase);
         $("#row3").append(letterEl);
       } else {
-        letterEl.on("click", addLetter);
+        letterEl.on("click", addLetterCase);
         $("#row3").append(letterEl);
       }
     }
@@ -88,39 +88,33 @@ $(function () {
     console.log({ word });
   };
 
-  function addLetter(e) {
+  function addLetter(ltr, guess) {
+    guessIdx = guess.letters.length;
+    guess.letters.push(ltr);
+    $(`#el-${guess.idx}-${guessIdx}`).text(ltr.toUpperCase());
+  }
+
+  function addLetterCase(e) {
     if (!["Enter", "Backspace"].includes(e.target.id)) {
       const letter = e.target.id;
       switch (true) {
         case firstGuess.letters.length < 5 && !firstGuess.submit:
-          guessIdx = firstGuess.letters.length;
-          firstGuess.letters.push(letter);
-          $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
+          addLetter(letter, firstGuess);
           break;
         case secondGuess.letters.length < 5 && firstGuess.submit && !secondGuess.submit:
-          guessIdx = secondGuess.letters.length;
-          secondGuess.letters.push(letter);
-          $(`#el-1-${guessIdx}`).text(letter.toUpperCase());
+          addLetter(letter, secondGuess);
           break;
         case thirdGuess.letters.length < 5 && secondGuess.submit && firstGuess.submit && !thirdGuess.submit:
-          guessIdx = thirdGuess.letters.length;
-          thirdGuess.letters.push(letter);
-          $(`#el-2-${guessIdx}`).text(letter.toUpperCase());
+          addLetter(letter, thirdGuess);
           break;
         case fourthGuess.letters.length < 5 && thirdGuess.submit && secondGuess.submit && firstGuess.submit && !fourthGuess.submit:
-          guessIdx = fourthGuess.letters.length;
-          fourthGuess.letters.push(letter);
-          $(`#el-3-${guessIdx}`).text(letter.toUpperCase());
+          addLetter(letter, fourthGuess);
           break;
         case fifthGuess.letters.length < 5 && fourthGuess.submit && thirdGuess.submit && secondGuess.submit && firstGuess.submit && !fifthGuess.submit:
-          guessIdx = fifthGuess.letters.length;
-          fifthGuess.letters.push(letter);
-          $(`#el-4-${guessIdx}`).text(letter.toUpperCase());
+          addLetter(letter, fifthGuess);
           break;
         case sixthGuess.letters.length < 5 && fifthGuess.submit && fourthGuess.submit && thirdGuess.submit && secondGuess.submit && firstGuess.submit && !sixthGuess.submit:
-          guessIdx = sixthGuess.letters.length;
-          sixthGuess.letters.push(letter);
-          $(`#el-5-${guessIdx}`).text(letter.toUpperCase());
+          addLetter(letter, sixthGuess);
           break;
         default:
           return false;
@@ -194,6 +188,7 @@ $(function () {
     let winMsg = "";
     let count = 0;
     for (const key in userGuess) {
+      console.log({ count });
       if (guess.submit) {
         ++count;
       } else {
