@@ -20,12 +20,12 @@ This application uses jQuery Mobile to build a Wordle clone.
 
 ## Links
 
-[NOT DEPLOYED YET](https://lauracole1900.github.io/#/)
+[Notle](https://lauracole1900.github.io/notle/)
 
 ## Screenshots
 
 Landing page:
-![Landing page](assets/images/#.png)
+![Landing page](assets/images/landing-page-screenshot.png)
 
 ## Installation Instructions
 
@@ -59,4 +59,4 @@ If you have further questions, you can reach me at lauracole1900@comcast.net. Fo
 
 ## Badges
 
-[![License badge](https://img.shields.io/badge/license-MIT-121b26)](./LICENSE) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/LauraCole1900/lauras-wordle-clone)
+[![License badge](https://img.shields.io/badge/license-MIT-018653)](./LICENSE)

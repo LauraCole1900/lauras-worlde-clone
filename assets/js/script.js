@@ -1,5 +1,9 @@
 $(function () {
 
+  //==================//
+  // Global variables //
+  //==================//
+
   const wordBank = ["ossia", "masse", "brass", "basie", "stage", "triad", "still", "indie", "notes", "major", "satie", "sotto", "scale", "conga", "faure", "prima", "trill", "bizet", "genre", "piano", "combo", "elgar", "grave", "cover", "dukas", "tenor", "recit", "elvis", "pitch", "liszt", "elton", "pulse", "segue", "march", "dylan", "rondo", "hasse", "baton", "senza", "davis", "stops", "dolce", "drive", "miles", "rests", "sharp", "tozan", "elegy", "mosso", "etude", "lenny", "music", "verdi", "tempo", "bugle", "weber", "beats", "biebl", "snare", "choir", "gould", "parte", "tutti", "moses", "legno", "sarti", "break", "slide", "samba", "forza", "sousa", "stand", "click", "cello", "muddy", "audio", "lento", "aaron", "front", "janis", "tonic", "breve", "glass", "meter", "range", "basso", "holst", "count", "bruce", "motet", "carol", "tasto", "clara", "waltz", "blues", "modal", "rumba", "dolly", "dance", "chant", "ringo", "strum", "chord", "gluck", "chops", "largo", "grieg", "canon", "viola", "clefs", "suite", "pyotr", "remix", "beard", "molto", "forte", "julie", "staff", "tonal", "fosse", "motif", "segno", "ditty", "block", "verse", "haydn", "sopra", "fugue", "corda", "valve", "drone", "sixth", "gliss", "flute", "keith", "shred", "opera", "swing", "quasi", "berry", "banjo", "third", "lyric", "ravel", "reeds", "mezzo", "house", "canto", "track", "duple", "intro", "garth", "altos", "score", "drums", "fifth", "lully", "sitar", "theme", "vocal", "kazoo", "polka", "pedal", "pluck", "tuner", "organ", "louis", "whole", "shake", "neume", "voice", "chuck", "minor", "tacet", "octet", "hogan"];
 
   const keyboardChar = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"];
@@ -49,6 +53,11 @@ $(function () {
   const sixthGuess = userGuess.guess6;
   const startDate = new Date("4/1/2022");
 
+
+  //================//
+  //   Page build   //
+  //================//
+
   keyboardChar.map((char, i) => {
     letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char)
     if (i < 10) {
@@ -80,6 +89,12 @@ $(function () {
     }
   });
 
+
+  //=================//
+  //    Functions    //
+  //=================//
+
+  // Gets the day's word
   function getWord(date) {
     const todayDate = Date.now();
     const timeDiff = todayDate - date.getTime();
@@ -87,12 +102,15 @@ $(function () {
     word = wordBank.at(dayDiff);
   };
 
+  // Adds user-guessed letter to game board
   function addLetter(ltr, guess) {
     guessIdx = guess.letters.length;
     guess.letters.push(ltr);
     $(`#el-${guess.idx}-${guessIdx}`).text(ltr.toUpperCase());
   }
 
+  // Switch case to define which part of game board is current
+  // TODO: add keyup events to give better UX on laptops/desktops
   function addLetterCase(e) {
     if (!["Enter", "Backspace"].includes(e.target.id)) {
       const letter = e.target.id;
@@ -121,11 +139,14 @@ $(function () {
     }
   };
 
+  // Backspaces
   function handleBackspace(guess) {
     $(`#el-${guess.idx}-${guess.letters.length - 1}`).text("");
     guess.letters.pop();
   }
 
+  // Switch case to define which part of game board is current
+  // TODO: add keyup event to give better UX on laptops/desktops
   function handleBackspaceCase() {
     switch (true) {
       case !sixthGuess.submit && fifthGuess.submit && sixthGuess.letters.length > 0:
@@ -151,6 +172,7 @@ $(function () {
     }
   };
 
+  // Checks whether guessed word is a valid English word
   async function wordFetch(currWord, guess) {
     await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${currWord}`)
       .then(function (response) {
@@ -163,6 +185,7 @@ $(function () {
       });
   };
 
+  // Triggers modal if word is neither valid English word nor in word bank
   function notWord(guess) {
     guess.letters = [];
     for (let i = 0; i < 5; i++) {
@@ -175,11 +198,16 @@ $(function () {
     modal.css("display", "block");
   };
 
+  // Empties modal and hides it
   function closeModal() {
     $("#modalContent").empty();
     modal.css("display", "none");
   };
 
+  // Handles game win:
+  // Turns current game board squares green
+  // Sets modal message based on how many tries user took
+  // Shows modal
   function winGame(guess) {
     for (let i = 0; i < 5; i++) {
       $(`#el-${guess.idx}-${i}`).addClass("positionCorrect");
@@ -218,6 +246,8 @@ $(function () {
     modal.css("display", "block");
   };
 
+  // Handles game loss:
+  // Sets modal message and shows modal
   function loseGame() {
     const loseMsg = $(`<h2>Looks like we need to take it to the woodshed. The word is '${word.toUpperCase()}'</h2>`);
     const okBtn = $("<button type='button' class='btn'>OK</button>")
@@ -226,6 +256,10 @@ $(function () {
     modal.css("display", "block");
   };
 
+  // Handles game continuation:
+  // Sets class for correct letter & correct position for current guess
+  // Continues for guesses 1-5
+  // Calls games loss on guess 6
   function continueGame(currWord, guess) {
     for (let i = 0; i < currWord.length; i++) {
       for (let j = 0; j < word.length; j++) {
@@ -242,6 +276,11 @@ $(function () {
     }
   };
 
+  // Most basic game play logic:
+  // Concatenates guessed letters into a string
+  // Calls wordFetch to check word's validity
+  // If not, calls notWord
+  // If so, calls winGame for win or continueGame to continue
   async function playGame(whichGuess) {
     let wordGuessed = "";
     for (let i = 0; i < whichGuess.letters.length; i++) {
@@ -262,6 +301,7 @@ $(function () {
     }
   };
 
+  // Switch case that handles click on "Enter"
   async function handleSubmit() {
     switch (true) {
       case !firstGuess.submit:
@@ -288,5 +328,9 @@ $(function () {
   };
 
 
+  //==================//
+  //    Game start    //
+  //==================//
+  
   getWord(startDate);
 });
