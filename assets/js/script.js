@@ -8,42 +8,46 @@ $(function () {
   let guessEl;
   let word = "";
   const modal = $("#myModal");
+  let validate = false;
   let userGuess = {
     guess1: {
       letters: [],
-      submit: false
+      submit: false,
+      idx: 0
     },
     guess2: {
       letters: [],
-      submit: false
+      submit: false,
+      idx: 1
     },
     guess3: {
       letters: [],
-      submit: false
+      submit: false,
+      idx: 2
     },
     guess4: {
       letters: [],
-      submit: false
+      submit: false,
+      idx: 3
     },
     guess5: {
       letters: [],
-      submit: false
+      submit: false,
+      idx: 4
     },
     guess6: {
       letters: [],
-      submit: false
+      submit: false,
+      idx: 5
     }
   };
+  const firstGuess = userGuess.guess1;
+  const secondGuess = userGuess.guess2;
+  const thirdGuess = userGuess.guess3;
+  const fourthGuess = userGuess.guess4;
+  const fifthGuess = userGuess.guess5;
+  const sixthGuess = userGuess.guess6;
   const startDate = new Date("3/29/2022");
-  getWord(startDate);
-
-  function getWord(date) {
-    const todayDate = Date.now();
-    const timeDiff = todayDate - date.getTime();
-    const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-    word = wordBank.at(dayDiff);
-    console.log({ word });
-  }
 
   keyboardChar.map((char, i) => {
     letterEl = $("<div>").text(char.toUpperCase()).addClass("letterKey centered").attr("id", char)
@@ -74,40 +78,48 @@ $(function () {
       guessEl = $("<div>").addClass("letterGuess centered").attr("id", `el-${i}-${j}`);
       el.append(guessEl);
     }
-  })
+  });
+
+  function getWord(date) {
+    const todayDate = Date.now();
+    const timeDiff = todayDate - date.getTime();
+    const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+    word = wordBank.at(dayDiff);
+    console.log({ word });
+  }
 
   function addLetter(e) {
     if (!["Enter", "Backspace"].includes(e.target.id)) {
       const letter = e.target.id;
       switch (true) {
-        case userGuess.guess1.letters.length < 5 && !userGuess.guess1.submit:
-          guessIdx = userGuess.guess1.letters.length;
-          userGuess.guess1.letters.push(letter);
+        case firstGuess.letters.length < 5 && !firstGuess.submit:
+          guessIdx = firstGuess.letters.length;
+          firstGuess.letters.push(letter);
           $(`#el-0-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess.guess2.letters.length < 5 && userGuess.guess1.submit && !userGuess.guess2.submit:
-          guessIdx = userGuess.guess2.letters.length;
-          userGuess.guess2.letters.push(letter);
+        case secondGuess.letters.length < 5 && firstGuess.submit && !secondGuess.submit:
+          guessIdx = secondGuess.letters.length;
+          secondGuess.letters.push(letter);
           $(`#el-1-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess.guess3.letters.length < 5 && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess3.submit:
-          guessIdx = userGuess.guess3.letters.length;
-          userGuess.guess3.letters.push(letter);
+        case thirdGuess.letters.length < 5 && secondGuess.submit && firstGuess.submit && !thirdGuess.submit:
+          guessIdx = thirdGuess.letters.length;
+          thirdGuess.letters.push(letter);
           $(`#el-2-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess.guess4.letters.length < 5 && userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess4.submit:
-          guessIdx = userGuess.guess4.letters.length;
-          userGuess.guess4.letters.push(letter);
+        case fourthGuess.letters.length < 5 && thirdGuess.submit && secondGuess.submit && firstGuess.submit && !fourthGuess.submit:
+          guessIdx = fourthGuess.letters.length;
+          fourthGuess.letters.push(letter);
           $(`#el-3-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess.guess5.letters.length < 5 && userGuess.guess4.submit && userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess5.submit:
-          guessIdx = userGuess.guess5.letters.length;
-          userGuess.guess5.letters.push(letter);
+        case fifthGuess.letters.length < 5 && fourthGuess.submit && thirdGuess.submit && secondGuess.submit && firstGuess.submit && !fifthGuess.submit:
+          guessIdx = fifthGuess.letters.length;
+          fifthGuess.letters.push(letter);
           $(`#el-4-${guessIdx}`).text(letter.toUpperCase());
           break;
-        case userGuess.guess6.letters.length < 5 && userGuess.guess5.submit && userGuess.guess4.submit && userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess1.submit && !userGuess.guess6.submit:
-          guessIdx = userGuess.guess6.letters.length;
-          userGuess.guess6.letters.push(letter);
+        case sixthGuess.letters.length < 5 && fifthGuess.submit && fourthGuess.submit && thirdGuess.submit && secondGuess.submit && firstGuess.submit && !sixthGuess.submit:
+          guessIdx = sixthGuess.letters.length;
+          sixthGuess.letters.push(letter);
           $(`#el-5-${guessIdx}`).text(letter.toUpperCase());
           break;
         default:
@@ -118,334 +130,75 @@ $(function () {
 
   function handleBackspace() {
     switch (true) {
-      case !userGuess.guess6.submit && userGuess.guess5.submit && userGuess.guess6.letters.length > 0:
-        $(`#el-5-${userGuess.guess6.letters.length - 1}`).text("");
-        userGuess.guess6.letters.pop();
+      case !sixthGuess.submit && fifthGuess.submit && sixthGuess.letters.length > 0:
+        $(`#el-5-${sixthGuess.letters.length - 1}`).text("");
+        sixthGuess.letters.pop();
         break;
-      case !userGuess.guess5.submit && userGuess.guess4.submit && userGuess.guess5.letters.length > 0:
-        $(`#el-4-${userGuess.guess5.letters.length - 1}`).text("");
-        userGuess.guess5.letters.pop();
+      case !fifthGuess.submit && fourthGuess.submit && fifthGuess.letters.length > 0:
+        $(`#el-4-${fifthGuess.letters.length - 1}`).text("");
+        fifthGuess.letters.pop();
         break;
-      case !userGuess.guess4.submit && userGuess.guess3.submit && userGuess.guess4.letters.length > 0:
-        $(`#el-3-${userGuess.guess4.letters.length - 1}`).text("");
-        userGuess.guess4.letters.pop();
+      case !fourthGuess.submit && thirdGuess.submit && fourthGuess.letters.length > 0:
+        $(`#el-3-${fourthGuess.letters.length - 1}`).text("");
+        fourthGuess.letters.pop();
         break;
-      case !userGuess.guess3.submit && userGuess.guess2.submit && userGuess.guess3.letters.length > 0:
-        $(`#el-2-${userGuess.guess3.letters.length - 1}`).text("");
-        userGuess.guess3.letters.pop();
+      case !thirdGuess.submit && secondGuess.submit && thirdGuess.letters.length > 0:
+        $(`#el-2-${thirdGuess.letters.length - 1}`).text("");
+        thirdGuess.letters.pop();
         break;
-      case !userGuess.guess2.submit && userGuess.guess1.submit && userGuess.guess2.letters.length > 0:
-        $(`#el-1-${userGuess.guess2.letters.length - 1}`).text("");
-        userGuess.guess2.letters.pop();
+      case !secondGuess.submit && firstGuess.submit && secondGuess.letters.length > 0:
+        $(`#el-1-${secondGuess.letters.length - 1}`).text("");
+        secondGuess.letters.pop();
         break;
-      case !userGuess.guess1.submit && userGuess.guess1.letters.length > 0:
-        $(`#el-0-${userGuess.guess1.letters.length - 1}`).text("");
-        userGuess.guess1.letters.pop();
+      case !firstGuess.submit && firstGuess.letters.length > 0:
+        $(`#el-0-${firstGuess.letters.length - 1}`).text("");
+        firstGuess.letters.pop();
         break;
       default:
         return false;
     }
-  }
+  };
 
-  async function handleSubmit() {
-    const firstGuess = userGuess.guess1;
-    const secondGuess = userGuess.guess2;
-    const thirdGuess = userGuess.guess3;
-    const fourthGuess = userGuess.guess4;
-    const fifthGuess = userGuess.guess5;
-    const sixthGuess = userGuess.guess6;
-    let wordGuessed = "";
-    let validate = false;
-    switch (true) {
-      case !firstGuess.submit:
-        for (let i = 0; i < firstGuess.letters.length; i++) {
-          wordGuessed = wordGuessed.concat(firstGuess.letters[i]);
-        }
-        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
-          .then(function (response) {
-            if (response.ok) {
-              validate = true;
-              firstGuess.submit = true;
-            } else {
-              validate = false;
-            }
-          });
-        if (wordBank.includes(wordGuessed)) {
+  async function wordFetch(currWord, guess) {
+    await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${currWord}`)
+      .then(function (response) {
+        if (response.ok) {
           validate = true;
-          firstGuess.submit = true;
+          guess.submit = true;
+        } else {
+          validate = false;
         }
-        if (validate === false) {
-          firstGuess.letters = [];
-          for (let i = 0; i < 5; i++) {
-            $(`#el-0-${i}`).text("");
-          }
-          notWord();
-        }
-        if (validate && wordGuessed === word) {
-          for (let i = 0; i < 5; i++) {
-            $(`#el-0-${i}`).addClass("positionCorrect");
-          }
-          winGame();
-        } else if (validate && wordGuessed !== word) {
-          for (let i = 0; i < wordGuessed.length; i++) {
-            for (let j = 0; j < word.length; j++) {
-              if (wordGuessed[i] === word[i]) {
-                $(`#el-0-${i}`).addClass("positionCorrect");
-                continue;
-              } else if (word.includes(wordGuessed[i])) {
-                $(`#el-0-${i}`).addClass("letterCorrect");
-                continue;
-              }
-            }
-          }
-        }
-        break;
-      case firstGuess.submit && !secondGuess.submit:
-        for (let i = 0; i < secondGuess.letters.length; i++) {
-          wordGuessed = wordGuessed.concat(secondGuess.letters[i]);
-        }
-        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
-          .then(function (response) {
-            if (response.ok) {
-              validate = true;
-              secondGuess.submit = true;
-            } else {
-              validate = false;
-            }
-          });
-        if (wordBank.includes(wordGuessed)) {
-          validate = true;
-          secondGuess.submit = true;
-        }
-        if (validate === false) {
-          secondGuess.letters = [];
-          for (let i = 0; i < 5; i++) {
-            $(`#el-1-${i}`).text("");
-          }
-          notWord();
-        }
-        if (validate && wordGuessed === word) {
-          for (let i = 0; i < 5; i++) {
-            $(`#el-1-${i}`).addClass("positionCorrect");
-          }
-          winGame();
-        } else if (validate && wordGuessed !== word) {
-          for (let i = 0; i < wordGuessed.length; i++) {
-            for (let j = 0; j < word.length; j++) {
-              if (wordGuessed[i] === word[i]) {
-                $(`#el-1-${i}`).addClass("positionCorrect");
-                continue;
-              } else if (word.includes(wordGuessed[i])) {
-                $(`#el-1-${i}`).addClass("letterCorrect");
-                continue;
-              } else {
-                continue;
-              }
-            }
-          }
-        }
-        break;
-      case firstGuess.submit && secondGuess.submit && !thirdGuess.submit:
-        for (let i = 0; i < thirdGuess.letters.length; i++) {
-          wordGuessed = wordGuessed.concat(thirdGuess.letters[i]);
-        }
-        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
-          .then(function (response) {
-            if (response.ok) {
-              validate = true;
-              thirdGuess.submit = true;
-            } else {
-              validate = false;
-            }
-          });
-        if (wordBank.includes(wordGuessed)) {
-          validate = true;
-          thirdGuess.submit = true;
-        }
-        if (validate === false) {
-          thirdGuess.letters = [];
-          for (let i = 0; i < 5; i++) {
-            $(`#el-2-${i}`).text("");
-          }
-          notWord();
-        }
-        if (validate && wordGuessed === word) {
-          for (let i = 0; i < 5; i++) {
-            $(`#el-2-${i}`).addClass("positionCorrect");
-          }
-          winGame();
-        } else if (validate && wordGuessed !== word) {
-          for (let i = 0; i < wordGuessed.length; i++) {
-            for (let j = 0; j < word.length; j++) {
-              if (wordGuessed[i] === word[i]) {
-                $(`#el-2-${i}`).addClass("positionCorrect");
-                continue;
-              } else if (word.includes(wordGuessed[i])) {
-                $(`#el-2-${i}`).addClass("letterCorrect");
-                continue;
-              } else {
-                continue;
-              }
-            }
-          }
-        }
-        break;
-      case firstGuess.submit && secondGuess.submit && thirdGuess.submit && !fourthGuess.submit:
-        for (let i = 0; i < fourthGuess.letters.length; i++) {
-          wordGuessed = wordGuessed.concat(fourthGuess.letters[i]);
-        }
-        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
-          .then(function (response) {
-            if (response.ok) {
-              validate = true;
-              fourthGuess.submit = true;
-            } else {
-              validate = false;
-            }
-          });
-        if (wordBank.includes(wordGuessed)) {
-          validate = true;
-          fourthGuess.submit = true;
-        }
-        if (validate === false) {
-          fourthGuess.letters = [];
-          for (let i = 0; i < 5; i++) {
-            $(`#el-3-${i}`).text("");
-          }
-          notWord();
-        }
-        if (validate && wordGuessed === word) {
-          for (let i = 0; i < 5; i++) {
-            $(`#el-3-${i}`).addClass("positionCorrect");
-          }
-          winGame();
-        } else if (validate && wordGuessed !== word) {
-          for (let i = 0; i < wordGuessed.length; i++) {
-            for (let j = 0; j < word.length; j++) {
-              if (wordGuessed[i] === word[i]) {
-                $(`#el-3-${i}`).addClass("positionCorrect");
-                continue;
-              } else if (word.includes(wordGuessed[i])) {
-                $(`#el-3-${i}`).addClass("letterCorrect");
-                continue;
-              } else {
-                continue;
-              }
-            }
-          }
-        }
-        break;
-      case firstGuess.submit && secondGuess.submit && thirdGuess.submit && fourthGuess.submit && !fifthGuess.submit:
-        for (let i = 0; i < fifthGuess.letters.length; i++) {
-          wordGuessed = wordGuessed.concat(fifthGuess.letters[i]);
-        }
-        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
-          .then(function (response) {
-            if (response.ok) {
-              validate = true;
-              fifthGuess.submit = true;
-            } else {
-              validate = false;
-            }
-          });
-        if (wordBank.includes(wordGuessed)) {
-          validate = true;
-          fifthGuess.submit = true;
-        }
-        if (validate === false) {
-          fifthGuess.letters = [];
-          for (let i = 0; i < 5; i++) {
-            $(`#el-4-${i}`).text("");
-          }
-          notWord();
-        }
-        if (validate && wordGuessed === word) {
-          for (let i = 0; i < 5; i++) {
-            $(`#el-4-${i}`).addClass("positionCorrect");
-          }
-          winGame();
-        } else if (validate && wordGuessed !== word) {
-          for (let i = 0; i < wordGuessed.length; i++) {
-            for (let j = 0; j < word.length; j++) {
-              if (wordGuessed[i] === word[i]) {
-                $(`#el-4-${i}`).addClass("positionCorrect");
-                continue;
-              } else if (word.includes(wordGuessed[i])) {
-                $(`#el-4-${i}`).addClass("letterCorrect");
-                continue;
-              } else {
-                continue;
-              }
-            }
-          }
-        }
-        break;
-      case firstGuess.submit && secondGuess.submit && thirdGuess.submit && fourthGuess.submit && fifthGuess.submit && !sixthGuess.submit:
-        for (let i = 0; i < sixthGuess.letters.length; i++) {
-          wordGuessed = wordGuessed.concat(sixthGuess.letters[i]);
-        }
-        await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordGuessed}`)
-          .then(function (response) {
-            if (response.ok) {
-              validate = true;
-              sixthGuess.submit = true;
-            } else {
-              validate = false;
-            }
-          });
-        if (wordBank.includes(wordGuessed)) {
-          validate = true;
-          sixthGuess.submit = true;
-        }
-        if (validate === false) {
-          sixthGuess.letters = [];
-          for (let i = 0; i < 5; i++) {
-            $(`#el-5-${i}`).text("");
-          }
-          notWord();
-        }
-        if (validate && wordGuessed === word) {
-          for (let i = 0; i < 5; i++) {
-            $(`#el-5-${i}`).addClass("positionCorrect");
-          }
-          winGame();
-        } else if (validate && wordGuessed !== word) {
-          for (let i = 0; i < wordGuessed.length; i++) {
-            for (let j = 0; j < word.length; j++) {
-              if (wordGuessed[i] === word[i]) {
-                $(`#el-5-${i}`).addClass("positionCorrect");
-              } else if (word.includes(wordGuessed[i])) {
-                $(`#el-5-${i}`).addClass("letterCorrect");
-              }
-            }
-          }
-          loseGame();
-        }
-        break;
+      });
+  };
+
+  function notWord(guess) {
+    guess.letters = [];
+    for (let i = 0; i < 5; i++) {
+      $(`#el-${guess.idx}-${i}`).text("");
     }
-  }
-
-  function closeModal() {
-    $("#modalContent").empty();
-    modal.css("display", "none");
-  }
-
-  function notWord() {
     const notWordMsg = $("<h2>Word not found. Try again</h2>");
     const okBtn = $("<button type='button' class='btn'>OK</button>")
     okBtn.on("click", closeModal);
     $("#modalContent").append(notWordMsg).append(okBtn);
     modal.css("display", "block");
-  }
+  };
 
-  function winGame() {
+  function closeModal() {
+    $("#modalContent").empty();
+    modal.css("display", "none");
+  };
+
+  function winGame(guess) {
+    for (let i = 0; i < 5; i++) {
+      $(`#el-${guess.idx}-${i}`).addClass("positionCorrect");
+    }
     let winMsg = "";
     let count = 0;
     for (const key in userGuess) {
-      if (userGuess[key].submit) {
+      if (guess.submit) {
         ++count;
       } else {
-        userGuess[key].submit = true;
+        guess.submit = true;
       }
     }
     switch (count) {
@@ -471,7 +224,7 @@ $(function () {
     okBtn.on("click", closeModal);
     $("#modalContent").append(winMsg).append(okBtn);
     modal.css("display", "block");
-  }
+  };
 
   function loseGame() {
     const loseMsg = $(`<h2>Looks like we need to take it to the woodshed. The word is '${word.toUpperCase()}'</h2>`);
@@ -479,6 +232,69 @@ $(function () {
     okBtn.on("click", closeModal);
     $("#modalContent").append(loseMsg).append(okBtn);
     modal.css("display", "block");
-  }
+  };
 
-})
+  function continueGame(currWord, guess) {
+    for (let i = 0; i < currWord.length; i++) {
+      for (let j = 0; j < word.length; j++) {
+        if (currWord[i] === word[i]) {
+          $(`#el-${guess.idx}-${i}`).addClass("positionCorrect");
+          continue;
+        } else if (word.includes(currWord[i])) {
+          $(`#el-${guess.idx}-${i}`).addClass("letterCorrect");
+        }
+      }
+    }
+    if (guess === sixthGuess) {
+      loseGame();
+    }
+  };
+
+  async function playGame(whichGuess) {
+    let wordGuessed = "";
+    for (let i = 0; i < whichGuess.letters.length; i++) {
+      wordGuessed = wordGuessed.concat(whichGuess.letters[i]);
+    }
+    await wordFetch(wordGuessed, whichGuess)
+    if (wordBank.includes(wordGuessed)) {
+      validate = true;
+      whichGuess.submit = true;
+    }
+    if (validate === false) {
+      notWord(whichGuess);
+    }
+    if (validate && wordGuessed === word) {
+      winGame(whichGuess);
+    } else if (validate && wordGuessed !== word) {
+      continueGame(wordGuessed, whichGuess);
+    }
+  };
+
+  async function handleSubmit() {
+    switch (true) {
+      case !firstGuess.submit:
+        await playGame(firstGuess);
+        break;
+      case firstGuess.submit && !secondGuess.submit:
+        await playGame(secondGuess);
+        break;
+      case firstGuess.submit && secondGuess.submit && !thirdGuess.submit:
+        await playGame(thirdGuess);
+        break;
+      case firstGuess.submit && secondGuess.submit && thirdGuess.submit && !fourthGuess.submit:
+        await playGame(fourthGuess);
+        break;
+      case firstGuess.submit && secondGuess.submit && thirdGuess.submit && fourthGuess.submit && !fifthGuess.submit:
+        await playGame(fifthGuess);
+        break;
+      case firstGuess.submit && secondGuess.submit && thirdGuess.submit && fourthGuess.submit && fifthGuess.submit && !sixthGuess.submit:
+        await playGame(sixthGuess);
+        break;
+      default:
+        return false;
+    }
+  };
+
+
+  getWord(startDate);
+});
