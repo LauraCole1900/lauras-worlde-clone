@@ -62,7 +62,7 @@ $(function () {
         letterEl.on("click", handleSubmit);
         $("#row3").append(letterEl);
       } else if (char === "Backspace") {
-        letterEl.on("click", handleBackspace);
+        letterEl.on("click", handleBackspaceCase);
         $("#row3").append(letterEl);
       } else {
         letterEl.on("click", addLetter);
@@ -71,7 +71,7 @@ $(function () {
     }
   });
 
-  const guessElArr = [$("#firstGuess"), $("#secondGuess"), $("#thirdGuess"), $("#fourthGuess"), $("#fifthGuess"), $("#sixthGuess")]
+  const guessElArr = [$("#firstGuess"), $("#secondGuess"), $("#thirdGuess"), $("#fourthGuess"), $("#fifthGuess"), $("#sixthGuess")];
 
   guessElArr.forEach((el, i) => {
     for (let j = 0; j < 5; j++) {
@@ -86,7 +86,7 @@ $(function () {
     const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
     word = wordBank.at(dayDiff);
     console.log({ word });
-  }
+  };
 
   function addLetter(e) {
     if (!["Enter", "Backspace"].includes(e.target.id)) {
@@ -126,33 +126,32 @@ $(function () {
           return false;
       }
     }
+  };
+
+  function handleBackspace(guess) {
+    $(`#el-${guess.idx}-${guess.letters.length - 1}`).text("");
+    guess.letters.pop();
   }
 
-  function handleBackspace() {
+  function handleBackspaceCase() {
     switch (true) {
       case !sixthGuess.submit && fifthGuess.submit && sixthGuess.letters.length > 0:
-        $(`#el-5-${sixthGuess.letters.length - 1}`).text("");
-        sixthGuess.letters.pop();
+        handleBackspace(sixthGuess);
         break;
       case !fifthGuess.submit && fourthGuess.submit && fifthGuess.letters.length > 0:
-        $(`#el-4-${fifthGuess.letters.length - 1}`).text("");
-        fifthGuess.letters.pop();
+        handleBackspace(fifthGuess);
         break;
       case !fourthGuess.submit && thirdGuess.submit && fourthGuess.letters.length > 0:
-        $(`#el-3-${fourthGuess.letters.length - 1}`).text("");
-        fourthGuess.letters.pop();
+        handleBackspace(fourthGuess);
         break;
       case !thirdGuess.submit && secondGuess.submit && thirdGuess.letters.length > 0:
-        $(`#el-2-${thirdGuess.letters.length - 1}`).text("");
-        thirdGuess.letters.pop();
+        handleBackspace(thirdGuess);
         break;
       case !secondGuess.submit && firstGuess.submit && secondGuess.letters.length > 0:
-        $(`#el-1-${secondGuess.letters.length - 1}`).text("");
-        secondGuess.letters.pop();
+        handleBackspace(secondGuess);
         break;
       case !firstGuess.submit && firstGuess.letters.length > 0:
-        $(`#el-0-${firstGuess.letters.length - 1}`).text("");
-        firstGuess.letters.pop();
+        handleBackspace(firstGuess);
         break;
       default:
         return false;
