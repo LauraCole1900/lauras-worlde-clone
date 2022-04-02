@@ -89,6 +89,8 @@ $(function () {
     }
   });
 
+  $(document).keyup(addLetterCase);
+
 
   //=================//
   //    Functions    //
@@ -112,8 +114,9 @@ $(function () {
   // Switch case to define which part of game board is current
   // TODO: add keyup events to give better UX on laptops/desktops
   function addLetterCase(e) {
-    if (!["Enter", "Backspace"].includes(e.target.id)) {
-      const letter = e.target.id;
+    console.log(e.key);
+    const letter = e.target.id || e.key;
+    if (!["Enter", "Backspace"].includes(letter) && keyboardChar.includes(letter)) {
       switch (true) {
         case firstGuess.letters.length < 5 && !firstGuess.submit:
           addLetter(letter, firstGuess);
