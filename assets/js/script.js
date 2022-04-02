@@ -112,9 +112,7 @@ $(function () {
   }
 
   // Switch case to define which part of game board is current
-  // TODO: add keyup events to give better UX on laptops/desktops
   function addLetterCase(e) {
-    console.log(e.key);
     const letter = e.target.id || e.key;
     if (!["Enter", "Backspace"].includes(letter) && keyboardChar.includes(letter)) {
       switch (true) {
@@ -139,6 +137,10 @@ $(function () {
         default:
           return false;
       }
+    } else if (letter === "Backspace") {
+      handleBackspaceCase();
+    } else if (letter === "Enter") {
+      handleSubmit();
     }
   };
 
@@ -149,7 +151,6 @@ $(function () {
   }
 
   // Switch case to define which part of game board is current
-  // TODO: add keyup event to give better UX on laptops/desktops
   function handleBackspaceCase() {
     switch (true) {
       case !sixthGuess.submit && fifthGuess.submit && sixthGuess.letters.length > 0:
@@ -334,6 +335,6 @@ $(function () {
   //==================//
   //    Game start    //
   //==================//
-  
+
   getWord(startDate);
 });
