@@ -100,7 +100,11 @@ $(function () {
   function getWord(date) {
     const todayDate = Date.now();
     const timeDiff = todayDate - date.getTime();
-    const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+    let dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+    if (dayDiff >= wordBank.length) {
+      dayDiff = dayDiff % wordBank.length;
+    }
+    console.log(dayDiff);
     word = wordBank.at(dayDiff);
   };
 
